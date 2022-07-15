@@ -1,5 +1,5 @@
 ﻿namespace AvaloniaApplication13.ViewModels.Feature;
 
-internal record InvalidAddress : Address
+public record InvalidAddress : Address
 {
 }

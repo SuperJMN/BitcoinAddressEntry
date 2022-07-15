@@ -9,9 +9,9 @@ public class AddressViewModel : ViewModelBase
 {
     private string currentAddress = "";
 
-    public AddressViewModel()
+    public AddressViewModel(IClipboardObserver clipboardObserver)
     {
-        var clipboardMonitor = new ClipboardObserver();
+        var clipboardMonitor = clipboardObserver;
 
         var monitor = new AddressParser(Network.TestNet);
 

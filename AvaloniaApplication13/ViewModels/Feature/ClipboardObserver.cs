@@ -4,7 +4,12 @@ using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
-public class ClipboardObserver
+public interface IClipboardObserver
+{
+    IObservable<string> Contents { get; }
+}
+
+public class ClipboardObserver : IClipboardObserver
 {
     public ClipboardObserver()
     {

@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Reactive.Linq;
+using NBitcoin;
 using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
 public class AddressViewModel : ViewModelBase
 {
-    private string currentAddress;
+    private string currentAddress = "";
 
     public AddressViewModel()
     {
         var clipboardMonitor = new ClipboardObserver();
 
-        var currentTextChanged = this.WhenAnyValue(model => model.CurrentAddress);
+        var monitor = new AddressParser(Network.TestNet);
 
+        var currentTextChanged = this.WhenAnyValue(model => model.CurrentAddress)
+            .Select(s => monitor.GetAddress(s));
 
-        IsNewContent = clipboardMonitor.Contents.CombineLatest(currentTextChanged, (cpText, curAddr) =>
-                !string.Equals(cpText, curAddr));
+        IsNewContent = clipboardMonitor.Contents.Select(s => monitor.GetAddress(s))
+            .CombineLatest(currentTextChanged, (cpText, curAddr) =>
+                !Equals(cpText, curAddr) && cpText is not InvalidAddress);
 
         IsNewContentOnActivated = ApplicationUtils.IsMainWindowActive
             .CombineLatest(IsNewContent, (isActive, newContent) =>
                 isActive && newContent);
-
-        CurrentAddressObj = currentTextChanged.Select(s => address)
     }
-
+    
     public IObservable<bool> IsNewContentOnActivated { get; }
 
     public IObservable<bool> IsNewContent { get; }

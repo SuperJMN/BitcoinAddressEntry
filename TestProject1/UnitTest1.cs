@@ -25,9 +25,10 @@ namespace TestProject1
         {
             var clipboardObserver = ClipboardWith(clipboardAddress);
             var sut = new NewAddressViewModel(clipboardObserver, Network.TestNet);
+
             sut.RawAddress = currentAddress;
 
-            var canPast = await sut.CanPaste.Take(1);
+            var canPast = await sut.PasteCommand.CanExecute.Take(1);
             canPast.Should().Be(canPaste);
         }
 
@@ -58,6 +59,7 @@ namespace TestProject1
     {
         private readonly ObservableAsPropertyHelper<Address> address;
         private readonly ObservableAsPropertyHelper<Address> clipboardAddress;
+        private string rawAddress = "";
 
         public NewAddressViewModel(IClipboardObserver clipboardObserver, Network network)
         {
@@ -84,7 +86,13 @@ namespace TestProject1
         public Address ClipboardContents => clipboardAddress.Value;
 
         public IObservable<Address> AddressChanged { get; }
-        public string RawAddress { get; set; } = "";
+
+        public string RawAddress
+        {
+            get => rawAddress;
+            set => this.RaiseAndSetIfChanged(ref rawAddress, value);
+        }
+
         public IObservable<bool> CanPaste { get; }
 
         private void Paste()

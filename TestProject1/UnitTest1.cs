@@ -21,15 +21,15 @@ namespace TestProject1
         [InlineData("bitcoin:tb1q0382a3m2jzvyk5lkea5h5jcht88xa6l0jufgwx?amount=0.00010727&pj=https://payjoin.test.kukks.org/BTC/pj", "miner8VH6WPrsQ1Fxqb7MPgJEoFYX2RCkS", true)]
         [InlineData("miner8VH6WPrsQ1Fxqb7MPgJEoFYX2RCkS", "bitcoin:tb1q0382a3m2jzvyk5lkea5h5jcht88xa6l0jufgwx?amount=0.00010727&pj=https://payjoin.test.kukks.org/BTC/pj", true)]
         [InlineData("", "miner8VH6WPrsQ1Fxqb7MPgJEoFYX2RCkS", true)]
-        public async Task Can_paste(string currentAddress, string clipboardAddress, bool canPaste)
+        public async Task Can_paste(string currentAddress, string clipboardAddress, bool expectedCanPaste)
         {
             var clipboardObserver = ClipboardWith(clipboardAddress);
             var sut = new NewAddressViewModel(clipboardObserver, Network.TestNet);
 
             sut.RawAddress = currentAddress;
 
-            var canPast = await sut.PasteCommand.CanExecute.Take(1);
-            canPast.Should().Be(canPaste);
+            var canPaste = await sut.HasNewContent.Take(1);
+            canPaste.Should().Be(expectedCanPaste);
         }
 
         [Fact]
@@ -41,12 +41,34 @@ namespace TestProject1
         }
 
         [Fact]
-        public void Pasting_should()
+        public void Pasting_regular_address()
         {
             var clipboardObserver = ClipboardWith("mzMcNcKMXQdwMpdgknDQnHZiMxnQKWZ4vh");
             var sut = new NewAddressViewModel(clipboardObserver, Network.TestNet);
-            sut.PasteCommand.Execute().Subscribe();
+            sut.Paste();
             sut.RawAddress.Should().Be("mzMcNcKMXQdwMpdgknDQnHZiMxnQKWZ4vh");
+            sut.Amount.Should().Be(0);
+        }
+
+        [Fact]
+        public void Pasting_payjoin_address()
+        {
+            var clipboardObserver = ClipboardWith("bitcoin:tb1q0382a3m2jzvyk5lkea5h5jcht88xa6l0jufgwx?amount=0.00010727&pj=https://payjoin.test.kukks.org/BTC/pj");
+            var sut = new NewAddressViewModel(clipboardObserver, Network.TestNet);
+            sut.Paste();
+            sut.RawAddress.Should().Be("tb1q0382a3m2jzvyk5lkea5h5jcht88xa6l0jufgwx");
+            sut.Amount.Should().Be((decimal) 0.00010727);
+        }
+
+        [Fact]
+        public async Task After_pasting_payjoin_address_cannot_paste()
+        {
+            var clipboardObserver = ClipboardWith("bitcoin:tb1q0382a3m2jzvyk5lkea5h5jcht88xa6l0jufgwx?amount=0.00010727&pj=https://payjoin.test.kukks.org/BTC/pj");
+            var sut = new NewAddressViewModel(clipboardObserver, Network.TestNet);
+            sut.Paste();
+
+            var canPaste = await sut.HasNewContent.Take(1);
+            canPaste.Should().BeFalse();
         }
 
         private static IClipboardObserver ClipboardWith(string contents)
@@ -73,16 +95,13 @@ namespace TestProject1
             var clipboardAddressChanged = clipboardObserver.Contents.Select(s => monitor.GetAddress(s));
             clipboardAddress = clipboardAddressChanged.ToProperty(this, model => model.ClipboardContents);
 
-            CanPaste = clipboardAddressChanged
-                .CombineLatest(AddressChanged, (cpText, curAddr) =>
-                    !Equals(cpText, curAddr) && cpText is not InvalidAddress);
-
-            PasteCommand = ReactiveCommand.Create(Paste, CanPaste);
+            HasNewContent = clipboardAddressChanged
+                .CombineLatest(AddressChanged, (clipboard, current) =>
+                    !Equals(clipboard, current) && clipboard is not InvalidAddress);
         }
 
-        public ReactiveCommand<Unit, Unit> PasteCommand { get; }
-
         public Address Address => address.Value;
+
         public Address ClipboardContents => clipboardAddress.Value;
 
         public IObservable<Address> AddressChanged { get; }
@@ -93,9 +112,9 @@ namespace TestProject1
             set => this.RaiseAndSetIfChanged(ref rawAddress, value);
         }
 
-        public IObservable<bool> CanPaste { get; }
+        public IObservable<bool> HasNewContent { get; }
 
-        private void Paste()
+        public void Paste()
         {
             if (ClipboardContents is PayjoinAddress pj)
             {

@@ -35,6 +35,7 @@
                             </DataTriggerBehavior>
                         </Interaction.Behaviors>
                     </Button>
+					<TextBlock DockPanel.Dock="Bottom" Text="The address is invalid" Foreground="Red" IsVisible="{Binding MutableAddressHost.IsInvalidAddress^}"></TextBlock>
                     <TextBox Text="{Binding MutableAddressHost.Text, Mode=TwoWay}" />
 				</DockPanel>
 			</HeaderedContentControl>

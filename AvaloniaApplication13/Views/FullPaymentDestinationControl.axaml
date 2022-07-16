@@ -7,34 +7,46 @@
              x:Class="AvaloniaApplication13.Views.FullPaymentDestinationControl"
              x:DataType="viewModels:FullPaymentViewModel"
              x:CompileBindings="True">
-    <UserControl.Styles>
-        <Style Selector="HeaderedContentControl">
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <DockPanel>
-                        <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding Header}"
+	<UserControl.Styles>
+		<Style Selector="HeaderedContentControl">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<DockPanel>
+						<ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding Header}"
                                           DockPanel.Dock="Left" />
-                        <ContentPresenter Content="{TemplateBinding Content}" Margin="6" />
-                    </DockPanel>
-                </ControlTemplate>
-            </Setter>
-        </Style>
-    </UserControl.Styles>
+						<ContentPresenter Content="{TemplateBinding Content}" Margin="6" />
+					</DockPanel>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+	</UserControl.Styles>
 
-    <StackPanel>
-        <StackPanel>
-            <HeaderedContentControl Header="To:">
-                <TextBox Text="{Binding Sut.Text, Mode=TwoWay}" />
-            </HeaderedContentControl>
-            <HeaderedContentControl Header="Amount:">
-                <TextBox IsReadOnly="{Binding Sut.Address^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" Watermark="Amount" Text="{Binding Amount}" />
-            </HeaderedContentControl>
-            <HeaderedContentControl Header="Address:"
+	<StackPanel>
+		<StackPanel>
+			<HeaderedContentControl Header="To:">
+				<DockPanel>
+					<Button Content="Paste" DockPanel.Dock="Right" Command="{Binding PasteCommand}">
+						<Interaction.Behaviors>
+							<DataTriggerBehavior Binding="{Binding HasNewContent^}" Value="True">
+                                <ChangePropertyAction PropertyName="Foreground" Value="Red" />
+                            </DataTriggerBehavior>
+                            <DataTriggerBehavior Binding="{Binding HasNewContent^}" Value="False">
+                                <ChangePropertyAction PropertyName="Foreground" Value="Black" />
+                            </DataTriggerBehavior>
+                        </Interaction.Behaviors>
+                    </Button>
+                    <TextBox Text="{Binding Sut.Text, Mode=TwoWay}" />
+				</DockPanel>
+			</HeaderedContentControl>
+			<HeaderedContentControl Header="Amount:">
+				<TextBox IsReadOnly="{Binding Sut.Address^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" Watermark="Amount" Text="{Binding Amount}" />
+			</HeaderedContentControl>
+			<HeaderedContentControl Header="Address:"
                                     IsVisible="{Binding Sut.Address^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
-                <TextBox IsReadOnly="True"
+				<TextBox IsReadOnly="True"
                          Watermark="Address" Text="{Binding Address}" />
-            </HeaderedContentControl>
-        </StackPanel>
-        <TextBlock Margin="10" Text="{Binding Sut.Address^}" />
-    </StackPanel>
+			</HeaderedContentControl>
+		</StackPanel>
+		<TextBlock Margin="10" Text="{Binding Sut.Address^}" />
+	</StackPanel>
 </UserControl>

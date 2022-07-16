@@ -1,5 +1,6 @@
 using System;
-using System.Reactive.Linq;
+using System.Reactive;
+using System.Reactive.Subjects;
 using AvaloniaApplication13.ViewModels.Feature;
 using NBitcoin;
 using ReactiveUI;
@@ -28,16 +29,22 @@ namespace AvaloniaApplication13.ViewModels
             });
 
             var parser = new AddressParser(Network.TestNet);
-            ReactiveCommand.Create(() => Paste());
-            var contentChecker = new ContentChecker<NewAddress?>(new ClipboardObserver().Contents.Select(n => parser.GetAddress(n)), Sut.Address);
+
+            var contents = new ClipboardObserver().Contents;
+            var behavior = new BehaviorSubject<string>("");
+            contents.Subscribe(behavior);
+            var p = Sut.WhenAnyValue(sut => sut.Text);
+            var contentChecker = new ContentChecker<string>(contents, p, s => parser.GetAddress(s) is not null);
             HasNewContent = contentChecker.HasNewContent;
+            PasteCommand = ReactiveCommand.Create(() =>
+            {
+                Sut.Text = behavior.Value;
+            });
         }
+
+        public ReactiveCommand<Unit, Unit> PasteCommand { get; }
 
         public IObservable<bool> HasNewContent { get; }
-
-        private void Paste()
-        {
-        }
 
         public Sut Sut { get; set; }
 

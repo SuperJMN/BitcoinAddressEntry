@@ -1,14 +1,16 @@
 using System;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Subjects;
 using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature
 {
-    public class PaymentViewModel : ViewModelBase
+    public class PaymentViewModel : ViewModelBase, IDisposable
     {
         private string address = "";
         private decimal? amount;
+        private readonly CompositeDisposable disposables = new();
 
         public PaymentViewModel(IObservable<string> clipboardObserver, IMutableAddressHost mutableAddressHost, ContentChecker<string> contentChecker)
         {
@@ -24,15 +26,15 @@ namespace AvaloniaApplication13.ViewModels.Feature
                         Amount = a.Amount.Value;
                     }
                 }
-            });
+            }).DisposeWith(disposables);
 
             var clipboardContent = new BehaviorSubject<string>("");
-            clipboardObserver.Subscribe(clipboardContent);
+            clipboardObserver.Subscribe(clipboardContent).DisposeWith(disposables);
             HasNewContent = contentChecker.ActivatedWithNewContent;
             PasteCommand = ReactiveCommand.Create(() =>
             {
                 MutableAddressHost.Text = clipboardContent.Value;
-            });
+            }).DisposeWith(disposables);
         }
 
         public ReactiveCommand<Unit, Unit> PasteCommand { get; }
@@ -51,6 +53,11 @@ namespace AvaloniaApplication13.ViewModels.Feature
         {
             get => address;
             set => this.RaiseAndSetIfChanged(ref address, value);
+        }
+
+        public void Dispose()
+        {
+            disposables.Dispose();
         }
     }
 }

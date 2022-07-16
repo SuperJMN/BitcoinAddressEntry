@@ -17,7 +17,7 @@ public class MainViewModel : ViewModelBase
     private static PaymentViewModel Create(IObservable<string> newContentsChanged, Network network,
         IAddressParser parser)
     {
-        var mutableAddressHost = new MutableAddressHost(network, parser);
+        IMutableAddressHost mutableAddressHost = new MutableAddressHost(parser);
         return new PaymentViewModel(newContentsChanged, mutableAddressHost,
             new ContentChecker<string>(newContentsChanged, mutableAddressHost.TextChanged,
                 s => parser.GetAddress(s) is not null));

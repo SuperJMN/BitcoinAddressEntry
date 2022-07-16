@@ -12,7 +12,7 @@ public class Tests
     public void Test()
     {
         Network network = Network.TestNet;
-        var sut = new MutableAddressHost(network, new FullAddressParser(network));
+        var sut = new MutableAddressHost(new FullAddressParser(network));
         sut.Text = BtcAddress;
         sut.Address.Should().Be(new NewAddress(BtcAddress));
     }
@@ -21,7 +21,7 @@ public class Tests
     public void Address_should_match()
     {
         Network network = Network.TestNet;
-        var sut = new MutableAddressHost(network, new FullAddressParser(network));
+        var sut = new MutableAddressHost(new FullAddressParser(network));
         sut.Text = BtcAddress;
         sut.Address.Should().Be(new NewAddress(BtcAddress));
     }

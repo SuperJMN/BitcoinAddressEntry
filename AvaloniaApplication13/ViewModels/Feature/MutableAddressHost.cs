@@ -1,5 +1,4 @@
 using System;
-using NBitcoin;
 using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
@@ -8,7 +7,7 @@ public class MutableAddressHost : ViewModelBase, IMutableAddressHost
 {
     private string text;
 
-    public MutableAddressHost(Network network, IAddressParser addressParser)
+    public MutableAddressHost(IAddressParser addressParser)
     {
         text = "";
         var parser = addressParser;

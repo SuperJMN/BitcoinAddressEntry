@@ -12,7 +12,7 @@ namespace AvaloniaApplication13.ViewModels.Feature
         private decimal? amount;
         private readonly CompositeDisposable disposables = new();
 
-        public PaymentViewModel(IObservable<string> clipboardObserver, IMutableAddressHost mutableAddressHost, ContentChecker<string> contentChecker)
+        public PaymentViewModel(IObservable<string> incomingContent, IMutableAddressHost mutableAddressHost, ContentChecker<string> contentChecker)
         {
             MutableAddressHost = mutableAddressHost;
             MutableAddressHost.Address.Subscribe(a =>
@@ -29,7 +29,7 @@ namespace AvaloniaApplication13.ViewModels.Feature
             }).DisposeWith(disposables);
 
             var clipboardContent = new BehaviorSubject<string>("");
-            clipboardObserver.Subscribe(clipboardContent).DisposeWith(disposables);
+            incomingContent.Subscribe(clipboardContent).DisposeWith(disposables);
             HasNewContent = contentChecker.ActivatedWithNewContent;
             PasteCommand = ReactiveCommand.Create(() =>
             {

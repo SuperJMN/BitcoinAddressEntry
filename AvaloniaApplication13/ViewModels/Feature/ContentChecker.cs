@@ -10,7 +10,14 @@ public class ContentChecker<T>
         HasNewContent = from
             .CombineLatest(to, (clipboard, current) => isValid(clipboard) &&
                                                        !Equals(clipboard, current));
+
+        ActivatedWithNewContent = ApplicationUtils.IsMainWindowActive
+            .CombineLatest(HasNewContent, (isActive, newContent) =>
+                isActive && newContent);
+
     }
+
+    public IObservable<bool> ActivatedWithNewContent { get; }
 
     public IObservable<bool> HasNewContent { get; }
 }

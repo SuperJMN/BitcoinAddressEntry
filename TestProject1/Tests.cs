@@ -1,5 +1,6 @@
 using AvaloniaApplication13.ViewModels.Feature;
 using FluentAssertions;
+using NBitcoin;
 
 namespace TestProject1;
 
@@ -10,7 +11,8 @@ public class Tests
     [Fact]
     public void Test()
     {
-        var sut = new Sut();
+        Network network = Network.TestNet;
+        var sut = new MutableAddressHost(network, new FullAddressParser(network));
         sut.Text = BtcAddress;
         sut.Address.Should().Be(new NewAddress(BtcAddress));
     }
@@ -18,7 +20,8 @@ public class Tests
     [Fact]
     public void Address_should_match()
     {
-        var sut = new Sut();
+        Network network = Network.TestNet;
+        var sut = new MutableAddressHost(network, new FullAddressParser(network));
         sut.Text = BtcAddress;
         sut.Address.Should().Be(new NewAddress(BtcAddress));
     }

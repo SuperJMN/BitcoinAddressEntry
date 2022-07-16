@@ -1,21 +1,21 @@
 using System;
 using System.Reactive;
 using System.Reactive.Subjects;
-using AvaloniaApplication13.ViewModels.Feature;
 using NBitcoin;
 using ReactiveUI;
 
-namespace AvaloniaApplication13.ViewModels
+namespace AvaloniaApplication13.ViewModels.Feature
 {
-    public class FullPaymentViewModel : ViewModelBase
+    public class PaymentViewModel : ViewModelBase
     {
         private string address;
         private decimal? amount;
 
-        public FullPaymentViewModel()
+        public PaymentViewModel(IAddressParser addressParser)
         {
-            Sut = new Sut();
-            Sut.Address.Subscribe(address =>
+            Network network = Network.TestNet;
+            MutableAddressHost = new MutableAddressHost(network, addressParser);
+            MutableAddressHost.Address.Subscribe(address =>
             {
                 if (address is not null)
                 {
@@ -28,17 +28,15 @@ namespace AvaloniaApplication13.ViewModels
                 }
             });
 
-            var parser = new AddressParser(Network.TestNet);
-
-            var contents = new ClipboardObserver().Contents;
-            var behavior = new BehaviorSubject<string>("");
-            contents.Subscribe(behavior);
-            var p = Sut.WhenAnyValue(sut => sut.Text);
-            var contentChecker = new ContentChecker<string>(contents, p, s => parser.GetAddress(s) is not null);
-            HasNewContent = contentChecker.HasNewContent;
+            var parser = addressParser;
+            var clipboardContentChanged = new ClipboardObserver().ContentChanged;
+            var clipboardContent = new BehaviorSubject<string>("");
+            clipboardContentChanged.Subscribe(clipboardContent);
+            var contentChecker = new ContentChecker<string>(clipboardContentChanged, MutableAddressHost.TextChanged, s => parser.GetAddress(s) is not null);
+            HasNewContent = contentChecker.ActivatedWithNewContent;
             PasteCommand = ReactiveCommand.Create(() =>
             {
-                Sut.Text = behavior.Value;
+                MutableAddressHost.Text = clipboardContent.Value;
             });
         }
 
@@ -46,7 +44,7 @@ namespace AvaloniaApplication13.ViewModels
 
         public IObservable<bool> HasNewContent { get; }
 
-        public Sut Sut { get; set; }
+        public MutableAddressHost MutableAddressHost { get; }
 
         public decimal? Amount
         {

@@ -3,12 +3,12 @@ using NBitcoin;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
-public class AddressParser
+public class FullAddressParser : IAddressParser
 {
     private readonly BtcAddressValidator btcValidator;
     private readonly PayjoinAddressParser payjoinValidator;
 
-    public AddressParser(Network network)
+    public FullAddressParser(Network network)
     {
         var network1 = network;
         btcValidator = new BtcAddressValidator(network1);
@@ -29,6 +29,6 @@ public class AddressParser
             return new NewAddress(payjoinRequest.Address, payjoinRequest.Endpoint, payjoinRequest.Amount);
         }
 
-        return null;
+        return default;
     }
 }

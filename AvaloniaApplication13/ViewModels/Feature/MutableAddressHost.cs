@@ -4,16 +4,19 @@ using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
-public class Sut : ViewModelBase
+public class MutableAddressHost : ViewModelBase
 {
     private string text;
 
-    public Sut()
+    public MutableAddressHost(Network network, IAddressParser addressParser)
     {
-        Text = "";
-        var parser = new AddressParser(Network.TestNet);
+        text = "";
+        var parser = addressParser;
         Address = this.WhenAnyValue(s => s.Text, s => parser.GetAddress(s));
+        TextChanged = this.WhenAnyValue(x => x.Text);
     }
+
+    public IObservable<string> TextChanged { get; }
 
     public string Text
     {

@@ -28,4 +28,9 @@
     <PackageReference Include="NBitcoin" Version="7.0.8" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\FullPaymentDestinationControl.axaml.cs">
+      <DependentUpon>FullPaymentDestinationControl.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

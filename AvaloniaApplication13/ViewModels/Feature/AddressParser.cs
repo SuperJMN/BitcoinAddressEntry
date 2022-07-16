@@ -15,20 +15,20 @@ public class AddressParser
         payjoinValidator = new PayjoinAddressParser(network1);
     }
 
-    public Address GetAddress(string str)
+    public NewAddress? GetAddress(string str)
     {
         str = str.Trim();
 
         if (btcValidator.IsValid(str))
         {
-            return new BitcoinAddress(str);
+            return new NewAddress(str);
         }
 
         if (payjoinValidator.TryParse(str, out var payjoinRequest))
         {
-            return new PayjoinAddress(payjoinRequest);
+            return new NewAddress(payjoinRequest.Address, payjoinRequest.Endpoint, payjoinRequest.Amount);
         }
 
-        return new InvalidAddress();
+        return null;
     }
 }

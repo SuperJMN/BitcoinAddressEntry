@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AvaloniaApplication13.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApplication13.Views.FullPaymentDestinationControl"
+             x:DataType="viewModels:FullPaymentViewModel"
+             x:CompileBindings="True">
+    <UserControl.Styles>
+        <Style Selector="HeaderedContentControl">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <DockPanel>
+                        <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding Header}"
+                                          DockPanel.Dock="Left" />
+                        <ContentPresenter Content="{TemplateBinding Content}" Margin="6" />
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+
+    <StackPanel>
+        <StackPanel>
+            <HeaderedContentControl Header="To:">
+                <TextBox Text="{Binding Sut.Text, Mode=TwoWay}" />
+            </HeaderedContentControl>
+            <HeaderedContentControl Header="Amount:">
+                <TextBox IsReadOnly="{Binding Sut.Address^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" Watermark="Amount" Text="{Binding Amount}" />
+            </HeaderedContentControl>
+            <HeaderedContentControl Header="Address:"
+                                    IsVisible="{Binding Sut.Address^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                <TextBox IsReadOnly="True"
+                         Watermark="Address" Text="{Binding Address}" />
+            </HeaderedContentControl>
+        </StackPanel>
+        <TextBlock Margin="10" Text="{Binding Sut.Address^}" />
+    </StackPanel>
+</UserControl>

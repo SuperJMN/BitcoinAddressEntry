@@ -18,7 +18,7 @@ namespace AvaloniaApplication13
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = new MainWindow();
-                desktop.MainWindow.DataContext = new MainWindowViewModel();
+                desktop.MainWindow.DataContext = new FullPaymentViewModel();
             }
 
             base.OnFrameworkInitializationCompleted();

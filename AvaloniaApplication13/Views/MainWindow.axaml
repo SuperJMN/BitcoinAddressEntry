@@ -3,33 +3,14 @@
         xmlns:vm="using:AvaloniaApplication13.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:AvaloniaApplication13.Views"
         mc:Ignorable="d"
         x:Class="AvaloniaApplication13.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        x:DataType="vm:MainWindowViewModel"
-        x:CompileBindings="True" SizeToContent="Height"
-        Title="AvaloniaApplication13" Padding="10" Width="200">
+        x:DataType="vm:FullPaymentViewModel"
+        x:CompileBindings="True"
+        Title="AvaloniaApplication13" Padding="10">
 
-	<DockPanel>
-
-		<DockPanel DockPanel.Dock="Top" Opacity="0.6">
-			<TextBlock DockPanel.Dock="Top">Original</TextBlock>
-			<StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-				<CheckBox IsEnabled="False" IsChecked="{Binding AddressProp.IsNewContent^}" />
-				<CheckBox IsEnabled="False" IsChecked="{Binding AddressProp.IsNewContentOnActivated^}" />
-			</StackPanel>
-			<TextBox Text="{Binding AddressProp.CurrentAddress, Mode=TwoWay}" />
-		</DockPanel>
-		<StackPanel>
-			<Separator Height="1" Background="Black" BorderBrush="Black" Margin="10" />
-			<TextBlock>Form</TextBlock>
-            <TextBox DockPanel.Dock="Bottom" Text="{Binding Amount, Mode=TwoWay}" />
-            <DockPanel>
-                <Button DockPanel.Dock="Right" Content="Paste" Command="{Binding PasteCommand}" />
-                <TextBox DockPanel.Dock="Bottom" Text="{Binding Address, Mode=TwoWay}" />
-            </DockPanel>
-        </StackPanel>
-
-	</DockPanel>
+   <views:FullPaymentDestinationControl />
 
 </Window>

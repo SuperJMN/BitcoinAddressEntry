@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:AvaloniaApplication13.Views"
-        xmlns:feature="clr-namespace:AvaloniaApplication13.ViewModels.Feature"
         mc:Ignorable="d"
         x:Class="AvaloniaApplication13.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -13,8 +12,8 @@
         Title="AvaloniaApplication13" Padding="10">
 
 	<StackPanel>
-		<views:FullPaymentDestinationControl DataContext="{Binding FullEditor}" />
-        <views:FullPaymentDestinationControl DataContext="{Binding BtcOnlyEditor}" />
+		<views:PaymentDestinationControl DataContext="{Binding FullEditor}" />
+        <views:PaymentDestinationControl DataContext="{Binding BtcOnlyEditor}" />
 	</StackPanel>
 
 </Window>

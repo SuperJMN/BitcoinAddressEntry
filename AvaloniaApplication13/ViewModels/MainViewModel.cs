@@ -1,4 +1,5 @@
-﻿using AvaloniaApplication13.ViewModels.Feature;
+﻿using System;
+using AvaloniaApplication13.ViewModels.Feature;
 using NBitcoin;
 
 namespace AvaloniaApplication13.ViewModels;
@@ -7,8 +8,19 @@ public class MainViewModel : ViewModelBase
 {
     public MainViewModel()
     {
-        FullEditor = new PaymentViewModel(new FullAddressParser(Network.TestNet));
-        BtcOnlyEditor = new PaymentViewModel(new BtcOnlyAddressParser(Network.TestNet));
+        var clipboardObserver = new ClipboardObserver();
+        var network = Network.TestNet;
+        FullEditor = Create(clipboardObserver.ContentChanged, network, new FullAddressParser(network));
+        BtcOnlyEditor = Create(clipboardObserver.ContentChanged, network, new BtcOnlyAddressParser(network));
+    }
+
+    private static PaymentViewModel Create(IObservable<string> newContentsChanged, Network network,
+        IAddressParser parser)
+    {
+        var mutableAddressHost = new MutableAddressHost(network, parser);
+        return new PaymentViewModel(newContentsChanged, mutableAddressHost,
+            new ContentChecker<string>(newContentsChanged, mutableAddressHost.TextChanged,
+                s => parser.GetAddress(s) is not null));
     }
 
     public PaymentViewModel BtcOnlyEditor { get; }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:feature="clr-namespace:AvaloniaApplication13.ViewModels.Feature"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaApplication13.Views.FullPaymentDestinationControl"
+             x:Class="AvaloniaApplication13.Views.PaymentDestinationControl"
              x:DataType="feature:PaymentViewModel"
              x:CompileBindings="True">
 	<UserControl.Styles>
@@ -47,6 +47,5 @@
                          Watermark="Address" Text="{Binding Address}" />
 			</HeaderedContentControl>
 		</StackPanel>
-		<TextBlock Margin="10" Text="{Binding MutableAddressHost.Address^}" />
 	</StackPanel>
 </UserControl>

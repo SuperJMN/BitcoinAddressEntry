@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
-public class MutableAddressHost : ViewModelBase
+public class MutableAddressHost : ViewModelBase, IMutableAddressHost
 {
     private string text;
 

@@ -1,38 +1,33 @@
 using System;
 using System.Reactive;
 using System.Reactive.Subjects;
-using NBitcoin;
 using ReactiveUI;
 
 namespace AvaloniaApplication13.ViewModels.Feature
 {
     public class PaymentViewModel : ViewModelBase
     {
-        private string address;
+        private string address = "";
         private decimal? amount;
 
-        public PaymentViewModel(IAddressParser addressParser)
+        public PaymentViewModel(IObservable<string> clipboardObserver, IMutableAddressHost mutableAddressHost, ContentChecker<string> contentChecker)
         {
-            Network network = Network.TestNet;
-            MutableAddressHost = new MutableAddressHost(network, addressParser);
-            MutableAddressHost.Address.Subscribe(address =>
+            MutableAddressHost = mutableAddressHost;
+            MutableAddressHost.Address.Subscribe(a =>
             {
-                if (address is not null)
+                if (a is not null)
                 {
-                    Address = address.BtcAddress;
+                    Address = a.BtcAddress;
 
-                    if (address.Amount is not null)
+                    if (a.Amount is not null)
                     {
-                        Amount = address.Amount.Value;
+                        Amount = a.Amount.Value;
                     }
                 }
             });
 
-            var parser = addressParser;
-            var clipboardContentChanged = new ClipboardObserver().ContentChanged;
             var clipboardContent = new BehaviorSubject<string>("");
-            clipboardContentChanged.Subscribe(clipboardContent);
-            var contentChecker = new ContentChecker<string>(clipboardContentChanged, MutableAddressHost.TextChanged, s => parser.GetAddress(s) is not null);
+            clipboardObserver.Subscribe(clipboardContent);
             HasNewContent = contentChecker.ActivatedWithNewContent;
             PasteCommand = ReactiveCommand.Create(() =>
             {
@@ -44,7 +39,7 @@ namespace AvaloniaApplication13.ViewModels.Feature
 
         public IObservable<bool> HasNewContent { get; }
 
-        public MutableAddressHost MutableAddressHost { get; }
+        public IMutableAddressHost MutableAddressHost { get; }
 
         public decimal? Amount
         {

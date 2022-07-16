@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace AvaloniaApplication13.Views
 {
-    public partial class FullPaymentDestinationControl : UserControl
+    public partial class PaymentDestinationControl : UserControl
     {
-        public FullPaymentDestinationControl()
+        public PaymentDestinationControl()
         {
             InitializeComponent();
         }

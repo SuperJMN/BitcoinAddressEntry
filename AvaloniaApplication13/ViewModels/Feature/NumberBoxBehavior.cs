@@ -8,6 +8,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactions.Custom;
 
+namespace AvaloniaApplication13.ViewModels.Feature;
+
 public class NumberBoxBehavior : DisposingBehavior<TextBox>
 {
     protected override void OnAttached(CompositeDisposable disposables)

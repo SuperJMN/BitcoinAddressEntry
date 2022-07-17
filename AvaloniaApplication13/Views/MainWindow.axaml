@@ -46,11 +46,11 @@
 
 	<StackPanel Spacing="30">
 		<HeaderedContentControl Header="Fully featured">
-			<views:SendView DataContext="{Binding FullPayment}" />
+			<views:SendView DataContext="{Binding SendViewModel}" />
 		</HeaderedContentControl>
 		<Separator Background="Black" Height="1" />
         <HeaderedContentControl Header="BTC address only">
-            <views:AnotherView DataContext="{Binding BtcOnly}" />
+            <views:AddressEntryDialogView DataContext="{Binding AddressEntryDialog}" />
         </HeaderedContentControl>	</StackPanel>
 
 </Window>

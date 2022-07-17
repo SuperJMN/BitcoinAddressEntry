@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -31,10 +31,13 @@
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\BtcAddressControl.axaml.cs">
+    <Compile Update="Views\AddressEntryDialogView.axaml.cs">
+      <DependentUpon>AddressEntryDialogView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\BtcAddressControl.axaml.cs">
       <DependentUpon>BtcAddressControl.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\PaymentDestinationControl.axaml.cs">
+    <Compile Update="Controls\PaymentDestinationControl.axaml.cs">
       <DependentUpon>PaymentDestinationControl.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

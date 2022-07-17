@@ -1,12 +1,11 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaloniaApplication13.Views
+namespace AvaloniaApplication13.Controls
 {
-    public partial class AnotherView : UserControl
+    public partial class BtcAddressControl : UserControl
     {
-        public AnotherView()
+        public BtcAddressControl()
         {
             InitializeComponent();
         }

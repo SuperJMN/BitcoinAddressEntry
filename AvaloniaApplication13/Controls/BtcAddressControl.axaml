@@ -8,7 +8,7 @@
              xmlns:feature="clr-namespace:AvaloniaApplication13.ViewModels.Feature"
              xmlns:global="clr-namespace:"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaApplication13.Views.BtcAddressControl"
+             x:Class="AvaloniaApplication13.Controls.BtcAddressControl"
              x:DataType="feature:PaymentViewModel"
              x:CompileBindings="True">
 	<UserControl.Styles>

@@ -1,7 +1,6 @@
-﻿using AvaloniaApplication13.ViewModels.Feature;
-using NBitcoin;
+﻿using NBitcoin;
 
-namespace AvaloniaApplication13.ViewModels;
+namespace AvaloniaApplication13.ViewModels.Feature;
 
 public static class Factory
 {
@@ -14,7 +13,7 @@ public static class Factory
         Network = Network.TestNet;
     }
 
-    public static PaymentViewModel Create(        IAddressParser parser)
+    public static PaymentViewModel Create(IAddressParser parser)
     {
         var newContentsChanged = ClipboardObserver.ContentChanged;
         IMutableAddressHost mutableAddressHost = new MutableAddressHost(parser);

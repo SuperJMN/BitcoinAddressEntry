@@ -4,11 +4,11 @@ public class MainViewModel : ViewModelBase
 {
     public MainViewModel()
     {
-        FullPayment = new FullViewModel();
-        BtcOnly = new BtcOnlyViewModel();
+        SendViewModel = new SendViewModel();
+        AddressEntryDialog = new AddressEntryDialogViewModel();
     }
 
-    public BtcOnlyViewModel BtcOnly { get; }
+    public AddressEntryDialogViewModel AddressEntryDialog { get; }
 
-    public FullViewModel FullPayment { get; }
+    public SendViewModel SendViewModel { get; }
 }

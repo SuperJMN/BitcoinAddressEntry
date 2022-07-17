@@ -3,11 +3,11 @@ using NBitcoin;
 
 namespace AvaloniaApplication13.ViewModels;
 
-public class FullViewModel
+public class AddressEntryDialogViewModel
 {
-    public FullViewModel()
+    public AddressEntryDialogViewModel()
     {
-        PaymentViewModel = Factory.Create(new FullAddressParser(Network.TestNet));
+        PaymentViewModel = Factory.Create(new BtcOnlyAddressParser(Network.TestNet));
     }
 
     public PaymentViewModel PaymentViewModel { get; }

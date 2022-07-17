@@ -1,4 +1,4 @@
-﻿using AvaloniaApplication13.ViewModels.Feature;
+﻿using AvaloniaApplication13.ViewModels.DestinationEntry;
 using NBitcoin;
 
 namespace AvaloniaApplication13.ViewModels;

@@ -1,7 +1,6 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using AvaloniaApplication13.ViewModels;
-using AvaloniaApplication13.ViewModels.Feature;
 using DynamicData.Binding;
 using FluentAssertions;
 using Moq;

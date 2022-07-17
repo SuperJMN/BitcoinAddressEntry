@@ -1,16 +1,12 @@
-﻿using NBitcoin;
-
-namespace AvaloniaApplication13.ViewModels.Feature;
+﻿namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public static class Factory
 {
-    private static readonly Network Network;
     private static readonly ClipboardObserver ClipboardObserver;
 
     static Factory()
     {
         ClipboardObserver = new ClipboardObserver();
-        Network = Network.TestNet;
     }
 
     public static PaymentViewModel Create(IAddressParser parser)

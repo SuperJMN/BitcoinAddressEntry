@@ -1,5 +1,5 @@
 ﻿using System;
 
-namespace AvaloniaApplication13.ViewModels.Feature;
+namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public record PayjoinRequest(Uri Endpoint, string Address, decimal Amount);

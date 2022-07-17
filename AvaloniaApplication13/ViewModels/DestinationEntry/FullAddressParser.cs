@@ -1,7 +1,6 @@
-﻿using System;
-using NBitcoin;
+﻿using NBitcoin;
 
-namespace AvaloniaApplication13.ViewModels.Feature;
+namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public class FullAddressParser : IAddressParser
 {

@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace AvaloniaApplication13.ViewModels.Feature;
+namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public static class ApplicationUtils
 {

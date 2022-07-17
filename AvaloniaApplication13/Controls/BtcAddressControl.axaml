@@ -5,11 +5,11 @@
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions"
              xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
-             xmlns:feature="clr-namespace:AvaloniaApplication13.ViewModels.Feature"
              xmlns:global="clr-namespace:"
+             xmlns:destinationEntry="clr-namespace:AvaloniaApplication13.ViewModels.DestinationEntry"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaApplication13.Controls.BtcAddressControl"
-             x:DataType="feature:PaymentViewModel"
+             x:DataType="destinationEntry:PaymentViewModel"
              x:CompileBindings="True">
 	<UserControl.Styles>
 		<Style Selector="HeaderedContentControl">

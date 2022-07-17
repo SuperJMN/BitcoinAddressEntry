@@ -8,7 +8,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactions.Custom;
 
-namespace AvaloniaApplication13.ViewModels.Feature;
+namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public class NumberBoxBehavior : DisposingBehavior<TextBox>
 {

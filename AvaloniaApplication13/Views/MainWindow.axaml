@@ -9,6 +9,7 @@
         Icon="/Assets/avalonia-logo.ico"
         x:DataType="vm:MainViewModel"
         x:CompileBindings="True"
+        WindowStartupLocation="CenterOwner"
         Width="500"
         SizeToContent="Height"
         Title="AvaloniaApplication13" Padding="10">

@@ -4,22 +4,22 @@ using System.Globalization;
 using NBitcoin;
 using NBitcoin.Payment;
 
-namespace AvaloniaApplication13.ViewModels.Feature;
+namespace AvaloniaApplication13.ViewModels.DestinationEntry;
 
 public class PayjoinAddressParser
 {
-    private readonly Network _expectedNetwork;
+    private readonly Network expectedNetwork;
 
     public PayjoinAddressParser(Network expectedNetwork)
     {
-        _expectedNetwork = expectedNetwork;
+        this.expectedNetwork = expectedNetwork;
     }
 
     public bool TryParse(string text, [NotNullWhen(true)] out PayjoinRequest? payjoinRequest)
     {
         payjoinRequest = null;
 
-        if (text is null || _expectedNetwork is null)
+        if (text is null || expectedNetwork is null)
         {
             return false;
         }
@@ -38,8 +38,8 @@ public class PayjoinAddressParser
                 return false;
             }
 
-            BitcoinUrlBuilder bitcoinUrl = new(text, _expectedNetwork);
-            if (bitcoinUrl.Address is { } address && address.Network == _expectedNetwork)
+            BitcoinUrlBuilder bitcoinUrl = new(text, expectedNetwork);
+            if (bitcoinUrl.Address is { } address && address.Network == expectedNetwork)
             {
                 if (!bitcoinUrl.UnknownParameters.TryGetValue("pj", out var endpointString))
                 {

@@ -1,5 +1,5 @@
 using System.Reactive.Linq;
-using AvaloniaApplication13.ViewModels.Feature;
+using AvaloniaApplication13.ViewModels.DestinationEntry;
 using FluentAssertions;
 
 namespace TestProject1;

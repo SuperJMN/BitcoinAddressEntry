@@ -1,13 +1,12 @@
 using System;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 
-namespace AvaloniaApplication13.ViewModels.Feature
+namespace AvaloniaApplication13.ViewModels.DestinationEntry
 {
     public class PaymentViewModel : ReactiveValidationObject, IDisposable
     {

@@ -1,4 +1,4 @@
-using AvaloniaApplication13.ViewModels.Feature;
+using AvaloniaApplication13.ViewModels.DestinationEntry;
 using FluentAssertions;
 using NBitcoin;
 

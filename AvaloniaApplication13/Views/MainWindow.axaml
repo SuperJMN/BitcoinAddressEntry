@@ -9,7 +9,7 @@
         Icon="/Assets/avalonia-logo.ico"
         x:DataType="vm:MainViewModel"
         x:CompileBindings="True"
-        Width="300"
+        Width="500"
         SizeToContent="Height"
         Title="AvaloniaApplication13" Padding="10">
 
@@ -45,11 +45,11 @@
 	</Window.Styles>
 
 	<StackPanel Spacing="30">
-		<HeaderedContentControl Header="Fully featured">
+		<HeaderedContentControl Header="SendViewModel">
 			<views:SendView DataContext="{Binding SendViewModel}" />
 		</HeaderedContentControl>
 		<Separator Background="Black" Height="1" />
-        <HeaderedContentControl Header="BTC address only">
+        <HeaderedContentControl Header="AddressEntryDialogViewModel">
             <views:AddressEntryDialogView DataContext="{Binding AddressEntryDialog}" />
         </HeaderedContentControl>	</StackPanel>
 

@@ -9,5 +9,9 @@
              x:Class="AvaloniaApplication13.Views.SendView"
              x:DataType="viewModels:SendViewModel"
              x:CompileBindings="True">
-  <controls:PaymentDestinationControl DataContext="{Binding PaymentViewModel}" />
+
+	<StackPanel>
+        <TextBlock TextWrapping="Wrap">This is a destination selector that supports regular addresses and payjoin addresses, like the Send view</TextBlock>
+		<controls:PaymentDestinationControl DataContext="{Binding PaymentViewModel}" />
+	</StackPanel>
 </UserControl>

@@ -3,11 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AvaloniaApplication13.ViewModels"
-             xmlns:views="clr-namespace:AvaloniaApplication13.Views"
              xmlns:controls="clr-namespace:AvaloniaApplication13.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaApplication13.Views.AddressEntryDialogView"
              x:DataType="viewModels:AddressEntryDialogViewModel"
              x:CompileBindings="True">
-    <controls:BtcAddressControl DataContext="{Binding PaymentViewModel}" />
+
+    <StackPanel>
+        <TextBlock TextWrapping="Wrap">This is a sample view that supports only regular addresses</TextBlock>
+        <controls:BtcAddressControl DataContext="{Binding PaymentViewModel}" />
+    </StackPanel>
 </UserControl>

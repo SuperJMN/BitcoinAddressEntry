@@ -1,21 +1,24 @@
 using System;
 using System.Reactive;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 
 namespace AvaloniaApplication13.ViewModels.Feature
 {
-    public class PaymentViewModel : ViewModelBase, IDisposable
+    public class PaymentViewModel : ReactiveValidationObject, IDisposable
     {
         private string address = "";
-        private decimal? amount;
+        private decimal amount;
         private readonly CompositeDisposable disposables = new();
 
         public PaymentViewModel(IObservable<string> incomingContent, IMutableAddressHost mutableAddressHost, ContentChecker<string> contentChecker)
         {
             MutableAddressHost = mutableAddressHost;
-            MutableAddressHost.Address.Subscribe(a =>
+            MutableAddressHost.ParsedAddress.Subscribe(a =>
             {
                 if (a is not null)
                 {
@@ -35,6 +38,10 @@ namespace AvaloniaApplication13.ViewModels.Feature
             {
                 MutableAddressHost.Text = clipboardContent.Value;
             }).DisposeWith(disposables);
+
+            this.ValidationRule(
+                viewModel => viewModel.Amount, x => x > 0,
+                "Amount should be greater than 0");
         }
 
         public ReactiveCommand<Unit, Unit> PasteCommand { get; }
@@ -43,7 +50,7 @@ namespace AvaloniaApplication13.ViewModels.Feature
 
         public IMutableAddressHost MutableAddressHost { get; }
 
-        public decimal? Amount
+        public decimal Amount
         {
             get => amount;
             set => this.RaiseAndSetIfChanged(ref amount, value);

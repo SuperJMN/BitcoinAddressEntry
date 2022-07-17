@@ -14,7 +14,7 @@ public class Tests
         Network network = Network.TestNet;
         var sut = new MutableAddressHost(new FullAddressParser(network));
         sut.Text = BtcAddress;
-        sut.Address.Should().Be(new NewAddress(BtcAddress));
+        sut.ParsedAddress.Should().Be(new Address(BtcAddress));
     }
 
     [Fact]
@@ -23,6 +23,6 @@ public class Tests
         Network network = Network.TestNet;
         var sut = new MutableAddressHost(new FullAddressParser(network));
         sut.Text = BtcAddress;
-        sut.Address.Should().Be(new NewAddress(BtcAddress));
+        sut.ParsedAddress.Should().Be(new Address(BtcAddress));
     }
 }

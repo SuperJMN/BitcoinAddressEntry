@@ -1,10 +1,12 @@
 using System;
 using System.Reactive.Linq;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 
 namespace AvaloniaApplication13.ViewModels.Feature;
 
-public class MutableAddressHost : ViewModelBase, IMutableAddressHost
+public class MutableAddressHost : ReactiveValidationObject, IMutableAddressHost
 {
     private string text;
 
@@ -12,13 +14,11 @@ public class MutableAddressHost : ViewModelBase, IMutableAddressHost
     {
         text = "";
         var parser = addressParser;
-        Address = this.WhenAnyValue(s => s.Text, s => parser.GetAddress(s));
+        ParsedAddress = this.WhenAnyValue(s => s.Text, s => parser.GetAddress(s));
         TextChanged = this.WhenAnyValue(x => x.Text);
-        IsInvalidAddress =
-            TextChanged.CombineLatest(Address, (txt, address) => !string.IsNullOrWhiteSpace(txt) && address is null);
+        this.ValidationRule(x => x.Text,
+            TextChanged.CombineLatest(ParsedAddress, (txt, address) => string.IsNullOrWhiteSpace(txt) || address is not null), "The address is invalid");
     }
-
-    public IObservable<bool> IsInvalidAddress { get; }
 
     public IObservable<string> TextChanged { get; }
 
@@ -28,5 +28,5 @@ public class MutableAddressHost : ViewModelBase, IMutableAddressHost
         set => this.RaiseAndSetIfChanged(ref text, value);
     }
 
-    public IObservable<NewAddress?> Address { get; }
+    public IObservable<Address?> ParsedAddress { get; }
 }

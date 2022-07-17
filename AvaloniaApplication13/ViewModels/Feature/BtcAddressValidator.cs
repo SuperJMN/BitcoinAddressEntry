@@ -5,11 +5,11 @@ namespace AvaloniaApplication13.ViewModels.Feature;
 
 public class BtcAddressValidator
 {
-    private readonly Network _expectedNetwork;
+    private readonly Network expectedNetwork;
 
     public BtcAddressValidator(Network expectedNetwork)
     {
-        _expectedNetwork = expectedNetwork ?? throw new ArgumentNullException(nameof(expectedNetwork));
+        this.expectedNetwork = expectedNetwork ?? throw new ArgumentNullException(nameof(expectedNetwork));
     }
 
     public bool IsValid(string text)
@@ -23,7 +23,7 @@ public class BtcAddressValidator
 
         try
         {
-            NBitcoin.BitcoinAddress.Create(text, _expectedNetwork);
+            NBitcoin.BitcoinAddress.Create(text, expectedNetwork);
             return true;
         }
         catch (FormatException)

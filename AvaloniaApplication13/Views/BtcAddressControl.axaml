@@ -8,7 +8,7 @@
              xmlns:feature="clr-namespace:AvaloniaApplication13.ViewModels.Feature"
              xmlns:global="clr-namespace:"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaApplication13.Views.PaymentDestinationControl"
+             x:Class="AvaloniaApplication13.Views.BtcAddressControl"
              x:DataType="feature:PaymentViewModel"
              x:CompileBindings="True">
 	<UserControl.Styles>
@@ -42,18 +42,6 @@
 					<TextBox Text="{Binding MutableAddressHost.Text, Mode=TwoWay}" />
 				</DockPanel>
 			</HeaderedContentControl>
-			<HeaderedContentControl Header="Amount:">
-				<TextBox IsReadOnly="{Binding MutableAddressHost.ParsedAddress^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" Watermark="Amount" Text="{Binding Amount, FallbackValue=null}">
-					<i:Interaction.Behaviors>
-						<global:NumberBoxBehavior></global:NumberBoxBehavior>
-					</i:Interaction.Behaviors>
-				</TextBox>
-			</HeaderedContentControl>
-			<HeaderedContentControl Header="Address:"
-                                    IsVisible="{Binding MutableAddressHost.ParsedAddress^.EndPoint, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
-				<TextBox IsReadOnly="True"
-                         Watermark="Address" Text="{Binding Address}" />
-			</HeaderedContentControl>
-		</StackPanel>
+        </StackPanel>
 	</StackPanel>
 </UserControl>

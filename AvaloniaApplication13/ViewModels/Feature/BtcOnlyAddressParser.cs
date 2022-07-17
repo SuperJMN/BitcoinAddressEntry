@@ -12,13 +12,13 @@ public class BtcOnlyAddressParser : IAddressParser
         btcValidator = new BtcAddressValidator(network1);
     }
 
-    public NewAddress? GetAddress(string str)
+    public Address? GetAddress(string str)
     {
         str = str.Trim();
 
         if (btcValidator.IsValid(str))
         {
-            return new NewAddress(str);
+            return new Address(str);
         }
 
         return default;

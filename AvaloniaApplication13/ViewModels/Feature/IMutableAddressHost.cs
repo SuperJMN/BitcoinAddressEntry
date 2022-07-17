@@ -6,6 +6,5 @@ public interface IMutableAddressHost
 {
     string Text { get; set; }
     IObservable<string> TextChanged { get; }
-    IObservable<NewAddress?> Address { get; }
-    IObservable<bool> IsInvalidAddress { get; }
+    IObservable<Address?> ParsedAddress { get; }
 }

@@ -2,5 +2,5 @@
 
 public interface IAddressParser
 {
-    NewAddress? GetAddress(string str);
+    Address? GetAddress(string str);
 }

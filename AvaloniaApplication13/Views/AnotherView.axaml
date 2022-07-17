@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AvaloniaApplication13.ViewModels"
+             xmlns:views="clr-namespace:AvaloniaApplication13.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaApplication13.Views.AnotherView"
+             x:DataType="viewModels:BtcOnlyViewModel"
+             x:CompileBindings="True">
+    <views:BtcAddressControl DataContext="{Binding PaymentViewModel}" />
+</UserControl>

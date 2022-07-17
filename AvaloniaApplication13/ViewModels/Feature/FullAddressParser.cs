@@ -10,23 +10,22 @@ public class FullAddressParser : IAddressParser
 
     public FullAddressParser(Network network)
     {
-        var network1 = network;
-        btcValidator = new BtcAddressValidator(network1);
-        payjoinValidator = new PayjoinAddressParser(network1);
+        btcValidator = new BtcAddressValidator(network);
+        payjoinValidator = new PayjoinAddressParser(network);
     }
 
-    public NewAddress? GetAddress(string str)
+    public Address? GetAddress(string str)
     {
         str = str.Trim();
 
         if (btcValidator.IsValid(str))
         {
-            return new NewAddress(str);
+            return new Address(str);
         }
 
         if (payjoinValidator.TryParse(str, out var payjoinRequest))
         {
-            return new NewAddress(payjoinRequest.Address, payjoinRequest.Endpoint, payjoinRequest.Amount);
+            return new Address(payjoinRequest.Address, payjoinRequest.Endpoint, payjoinRequest.Amount);
         }
 
         return default;
